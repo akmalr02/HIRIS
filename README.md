@@ -48,7 +48,3 @@ mempermudah pengelolaan SDM di perusahaan Anda.
 | **Ryandra Athaya Saleh** | Lead Frontend Developer |
 | **Octaviani Nursalsabila** | UI/UX Developer |
 | **Yossy Indra Kusuma** | Frontend Developer |
-
-**FWD Batch 3 - Kelompok HRIS** 🚀
-
-
