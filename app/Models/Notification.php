@@ -14,13 +14,7 @@ class Notification extends BaseModel
      *
      * @var array<int, string>
      */
-    // Ubah jadi guarded = id lebih simpel
-    protected $fillable = [
-        'user_id',
-        'type',
-        'message',
-        'is_read',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * Casting atribut ke tipe data native.

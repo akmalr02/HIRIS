@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['admin_hr', 'manager', 'employee'])->index();
-            $table->boolean('status_active')->default(true)->index();
+            $table->enum('role', ['admin_hr', 'manager', 'employee'])->default('employee');
+            $table->string('avatar')->nullable();
+            $table->boolean('status_active')->default(true);
             $table->timestamps();
         });
 

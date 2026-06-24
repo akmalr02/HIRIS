@@ -13,17 +13,49 @@ return new class extends Migration
     {
         Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
+
+            // Karyawan yang mengajukan cuti
+            $table->foreignId('employee_id')
+                  ->constrained('employees')
+                  ->cascadeOnDelete();
+
+            $table->enum('leave_type', [
+                'annual',      // Cuti tahunan
+                'sick',        // Cuti sakit
+                'maternity',   // Cuti melahirkan
+                'paternity',   // Cuti ayah (kelahiran anak)
+                'emergency',   // Cuti darurat / mendadak
+                'unpaid',      // Cuti tanpa bayaran
+                'other',       // Lainnya
+            ]);
+
             $table->date('start_date');
             $table->date('end_date');
-            $table->text('reason')->nullable();
-            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending')->index();
-            $table->foreignId('reviewed_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->text('reviewer_note')->nullable();
-            $table->string('foto_cuti')->nullable();
+            $table->unsignedInteger('total_days');               // Dihitung otomatis di Model/Observer
+            $table->text('reason');                              // Alasan pengajuan cuti
+            $table->string('attachment')->nullable();            // Upload surat dokter / surat lainnya
+
+            $table->enum('status', [
+                'pending',
+                'approved',
+                'rejected',
+            ])->default('pending');
+
+            // Manager / HR yang mereview — nullable karena awalnya belum direview
+            $table->foreignId('reviewed_by')
+                  ->nullable()
+                  ->constrained('users')
+                  ->nullOnDelete();
+
+            $table->timestamp('reviewed_at')->nullable();        // Waktu direview
+            $table->text('reviewer_note')->nullable();           // Catatan dari reviewer
+
             $table->timestamps();
 
-            $table->index(['employee_id', 'start_date', 'end_date']);
+            // Index untuk filter by status dan karyawan
+            $table->index(['employee_id', 'status']);
+            $table->index(['start_date', 'end_date']);
+            $table->index(['status']);
         });
     }
 

@@ -27,14 +27,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var list<string>
      */
-    // Ubah jadi guarded = id lebih simpel
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
-        'status_active',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * Atribut yang harus disembunyikan untuk serialisasi.

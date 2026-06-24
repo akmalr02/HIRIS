@@ -16,17 +16,7 @@ class LeaveRequest extends BaseModel
      *
      * @var list<string>
      */
-    // Ubah jadi guarded = id lebih simpel
-    protected $fillable = [
-        'employee_id',
-        'start_date',
-        'end_date',
-        'reason',
-        'status',
-        'reviewed_by',
-        'reviewer_note',
-        'foto_cuti'
-    ];
+    protected $guarded = ['id'];
 
     /**
      * Mendapatkan atribut yang harus di-cast.

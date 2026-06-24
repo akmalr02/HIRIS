@@ -13,14 +13,38 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('type');
+
+            // Penerima notifikasi
+            // null = broadcast ke semua user (untuk notif hari libur, pengumuman global)
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained('users')
+                  ->cascadeOnDelete();
+
+            $table->string('title');
             $table->text('message');
-            $table->boolean('is_read')->default(false)->index();
+
+            $table->enum('type', [
+                'leave_request',    // Ada pengajuan cuti baru (ke manager/HR)
+                'leave_approved',   // Cuti disetujui (ke karyawan)
+                'leave_rejected',   // Cuti ditolak (ke karyawan)
+                'birthday',         // Notif ulang tahun karyawan
+                'work_anniversary', // Notif anniversari kerja
+                'marriage',         // Notif pernikahan karyawan
+                'child_birth',      // Notif kelahiran anak
+                'holiday',          // Notif hari libur / tanggal merah
+                'announcement',     // Pengumuman dari HRD
+                'system',           // Notif sistem (maintenance, update, dll)
+            ]);
+
+            $table->boolean('is_read')->default(false);
+
             $table->timestamps();
 
+            // Index untuk query notif per user dan filter yang belum dibaca
             $table->index(['user_id', 'is_read']);
-            $table->index('created_at');
+            $table->index(['user_id', 'created_at']);
+            $table->index(['type']);
         });
     }
 

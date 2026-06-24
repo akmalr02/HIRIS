@@ -16,17 +16,7 @@ class Employee extends BaseModel
      *
      * @var list<string>
      */
-    // Ubah jadi guarded = id lebih simpel
-    protected $fillable = [
-        'user_id',
-        'employee_code',
-        'position',
-        'department_id',
-        'join_date',
-        'employment_status',
-        'contact',
-        'basic_salary',
-    ];
+    protected $guarded = ['id'];
 
     /**
      * Atribut yang harus di-cast.

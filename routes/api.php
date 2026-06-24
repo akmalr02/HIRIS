@@ -25,9 +25,9 @@ Route::middleware(['auth:api'])->group(function () {
     require __DIR__ . '/api/dashboard.php';
     require __DIR__ . '/api/department.php';
     require __DIR__ . '/api/employee.php';
-    // require __DIR__ . '/api/attendance.php';
     require __DIR__ . '/api/leave_request.php';
+    require __DIR__ . '/api/notification.php';
+    // require __DIR__ . '/api/attendance.php';
     // require __DIR__ . '/api/performance_review.php';
     // require __DIR__ . '/api/salary.php';
-    require __DIR__ . '/api/notification.php';
 });

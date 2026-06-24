@@ -9,9 +9,8 @@ class Department extends Model
 {
     use HasFactory;
 
-    // Ubah jadi guarded = id lebih simpel
-    protected $fillable = ['name', 'description', 'manager_id'];
-
+    // protected $fillable = ['name', 'description', 'manager_id'];
+    protected $guarded = ['id'];
     /**
      * Relasi 1:N dengan Manager
      *  Setiap departmen memiliki satu manager
